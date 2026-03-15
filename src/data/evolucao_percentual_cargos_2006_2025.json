@@ -1,0 +1,186 @@
+{
+  "pre_2019": {
+    "2006": {
+      "Defensores": 91.78,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 8.22,
+      "Assessores de Defensor (Jurídicos)": 0.0,
+      "Assessores Especiais": 0.0,
+      "Ajudante Geral": 0.0
+    },
+    "2007": {
+      "Defensores": 93.04,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 2.61,
+      "Assessores de Defensor (Jurídicos)": 4.35,
+      "Assessores Especiais": 0.0,
+      "Ajudante Geral": 0.0
+    },
+    "2008": {
+      "Defensores": 85.16,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 0.0,
+      "Assessores de Defensor (Jurídicos)": 7.81,
+      "Assessores Especiais": 7.03,
+      "Ajudante Geral": 0.0
+    },
+    "2009": {
+      "Defensores": 83.21,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 0.0,
+      "Assessores de Defensor (Jurídicos)": 9.16,
+      "Assessores Especiais": 7.63,
+      "Ajudante Geral": 0.0
+    },
+    "2010": {
+      "Defensores": 58.08,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 5.68,
+      "Assessores de Defensor (Jurídicos)": 31.88,
+      "Assessores Especiais": 4.37,
+      "Ajudante Geral": 0.0
+    },
+    "2011": {
+      "Defensores": 56.84,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 6.84,
+      "Assessores de Defensor (Jurídicos)": 32.05,
+      "Assessores Especiais": 4.27,
+      "Ajudante Geral": 0.0
+    },
+    "2012": {
+      "Defensores": 56.47,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 6.47,
+      "Assessores de Defensor (Jurídicos)": 32.76,
+      "Assessores Especiais": 4.31,
+      "Ajudante Geral": 0.0
+    },
+    "2013": {
+      "Defensores": 59.13,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 5.95,
+      "Assessores de Defensor (Jurídicos)": 32.14,
+      "Assessores Especiais": 2.78,
+      "Ajudante Geral": 0.0
+    },
+    "2014": {
+      "Defensores": 43.48,
+      "Analistas": 0.0,
+      "Técnicos Administrativos": 0.0,
+      "Assessores Técnicos": 5.51,
+      "Assessores de Defensor (Jurídicos)": 48.41,
+      "Assessores Especiais": 2.61,
+      "Ajudante Geral": 0.0
+    },
+    "2015": {
+      "Defensores": 40.41,
+      "Analistas": 2.05,
+      "Técnicos Administrativos": 7.31,
+      "Assessores Técnicos": 3.42,
+      "Assessores de Defensor (Jurídicos)": 44.52,
+      "Assessores Especiais": 2.28,
+      "Ajudante Geral": 0.0
+    },
+    "2016": {
+      "Defensores": 36.23,
+      "Analistas": 4.03,
+      "Técnicos Administrativos": 9.96,
+      "Assessores Técnicos": 3.39,
+      "Assessores de Defensor (Jurídicos)": 44.49,
+      "Assessores Especiais": 1.91,
+      "Ajudante Geral": 0.0
+    },
+    "2017": {
+      "Defensores": 38.1,
+      "Analistas": 3.77,
+      "Técnicos Administrativos": 11.31,
+      "Assessores Técnicos": 2.58,
+      "Assessores de Defensor (Jurídicos)": 42.46,
+      "Assessores Especiais": 1.79,
+      "Ajudante Geral": 0.0
+    },
+    "2018": {
+      "Defensores": 36.22,
+      "Analistas": 4.43,
+      "Técnicos Administrativos": 12.72,
+      "Assessores Técnicos": 2.7,
+      "Assessores de Defensor (Jurídicos)": 42.2,
+      "Assessores Especiais": 1.73,
+      "Ajudante Geral": 0.0
+    }
+  },
+  "from_2019": {
+    "2019": {
+      "Defensores": 34.17,
+      "Analistas": 5.37,
+      "Técnicos Administrativos": 11.81,
+      "Assessores Técnicos": 3.94,
+      "Assessores de Defensor (Jurídicos)": 42.75,
+      "Assessores Especiais": 1.97,
+      "Ajudante Geral": 0.0
+    },
+    "2020": {
+      "Defensores": 34.77,
+      "Analistas": 5.38,
+      "Técnicos Administrativos": 11.29,
+      "Assessores Técnicos": 3.76,
+      "Assessores de Defensor (Jurídicos)": 42.83,
+      "Assessores Especiais": 1.97,
+      "Ajudante Geral": 0.0
+    },
+    "2021": {
+      "Defensores": 35.15,
+      "Analistas": 5.27,
+      "Técnicos Administrativos": 11.07,
+      "Assessores Técnicos": 3.69,
+      "Assessores de Defensor (Jurídicos)": 43.06,
+      "Assessores Especiais": 1.76,
+      "Ajudante Geral": 0.0
+    },
+    "2022": {
+      "Defensores": 32.07,
+      "Analistas": 4.96,
+      "Técnicos Administrativos": 10.91,
+      "Assessores Técnicos": 3.8,
+      "Assessores de Defensor (Jurídicos)": 46.78,
+      "Assessores Especiais": 1.49,
+      "Ajudante Geral": 0.0
+    },
+    "2023": {
+      "Defensores": 31.41,
+      "Analistas": 4.93,
+      "Técnicos Administrativos": 11.02,
+      "Assessores Técnicos": 3.12,
+      "Assessores de Defensor (Jurídicos)": 47.37,
+      "Assessores Especiais": 2.14,
+      "Ajudante Geral": 0.0
+    },
+    "2024": {
+      "Defensores": 26.35,
+      "Analistas": 5.54,
+      "Técnicos Administrativos": 8.78,
+      "Assessores Técnicos": 4.33,
+      "Assessores de Defensor (Jurídicos)": 34.66,
+      "Assessores Especiais": 2.29,
+      "Ajudante Geral": 18.05
+    },
+    "2025": {
+      "Defensores": 27.32,
+      "Analistas": 7.42,
+      "Técnicos Administrativos": 10.01,
+      "Assessores Técnicos": 5.19,
+      "Assessores de Defensor (Jurídicos)": 36.09,
+      "Assessores Especiais": 2.72,
+      "Ajudante Geral": 11.25
+    }
+  }
+}

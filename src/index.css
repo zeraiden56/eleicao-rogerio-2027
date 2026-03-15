@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 160 25% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 25% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 25% 20%;
+
+    /* Verde escuro institucional da Defensoria MT */
+    --primary: 160 70% 20%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Verde médio para hover e destaques */
+    --primary-light: 160 60% 35%;
+    
+    /* Verde claro para backgrounds */
+    --secondary: 160 30% 92%;
+    --secondary-foreground: 160 70% 20%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 160 10% 45%;
+
+    --accent: 160 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 20% 88%;
+    --input: 160 20% 88%;
+    --ring: 160 70% 20%;
+
+    --radius: 0.75rem;
+    
+    /* Gradientes personalizados */
+    --gradient-primary: linear-gradient(135deg, hsl(160 70% 20%), hsl(160 60% 30%));
+    --gradient-hero: linear-gradient(135deg, hsl(160 70% 20% / 0.95), hsl(160 60% 30% / 0.9));
+    --gradient-light: linear-gradient(180deg, hsl(0 0% 100%), hsl(160 30% 98%));
+    --gradient-muted: linear-gradient(180deg, hsl(160 30% 98%), hsl(160 30% 95%));
+    --gradient-secondary: linear-gradient(135deg, hsl(160 30% 92%), hsl(160 30% 96%));
+    
+    /* Texturas granuladas SVG */
+    /* Textura para fundos verdes (primary) - mais visível */
+    --texture-grain-primary: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M38 36v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-32V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 36v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    
+    /* Textura para fundos brancos/claros - mais destacada (cinza escuro) */
+    --texture-grain-light: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23333333' fill-opacity='0.04'%3E%3Ccircle cx='8' cy='8' r='1.4'/%3E%3Ccircle cx='32' cy='10' r='1'/%3E%3Ccircle cx='56' cy='12' r='1.2'/%3E%3Ccircle cx='12' cy='36' r='1'/%3E%3Ccircle cx='40' cy='36' r='1.4'/%3E%3Ccircle cx='54' cy='40' r='1'/%3E%3Ccircle cx='20' cy='56' r='1.2'/%3E%3Ccircle cx='44' cy='56' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    
+    /* Textura genérica (mantida para compatibilidade) */
+    --texture-grain: var(--texture-grain-light);
+    
+    /* Gradientes com textura para fundos verdes */
+    --gradient-primary-textured: linear-gradient(135deg, hsl(160 70% 20%), hsl(160 60% 30%), hsl(160 50% 25%));
+    
+    /* Gradientes com textura para fundos brancos */
+    --gradient-background-textured: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 99.5%), hsl(0 0% 100%));
+    --gradient-card-textured: linear-gradient(180deg, hsl(0 0% 100%), hsl(160 30% 99%), hsl(0 0% 100%));
+    
+    /* Sombras elegantes */
+    --shadow-card: 0 4px 6px -1px hsl(160 70% 20% / 0.1), 0 2px 4px -2px hsl(160 70% 20% / 0.1);
+    --shadow-hover: 0 10px 15px -3px hsl(160 70% 20% / 0.15), 0 4px 6px -4px hsl(160 70% 20% / 0.1);
+    
+    /* Transições suaves */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 160 30% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 160 30% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 160 30% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 160 60% 50%;
+    --primary-foreground: 160 70% 10%;
+    
+    --primary-light: 160 60% 60%;
+
+    --secondary: 160 30% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 160 20% 15%;
+    --muted-foreground: 160 10% 65%;
+
+    --accent: 160 60% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 160 30% 18%;
+    --input: 160 30% 18%;
+    --ring: 160 60% 50%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(160 70% 15%), hsl(160 60% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(160 70% 12% / 0.95), hsl(160 60% 20% / 0.9));
+    --gradient-light: linear-gradient(180deg, hsl(160 30% 8%), hsl(160 30% 10%));
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    position: relative;
+  }
+  
+  /* Textura e gradiente no fundo do body (apenas para áreas sem conteúdo) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: var(--gradient-background-textured);
+    background-image: var(--texture-grain-light);
+    background-size: 64px 64px;
+    opacity: 0.18;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Animações de entrada ao rolar */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Gradiente de texto */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  
+  /* Line clamp utility */
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Animações de revelação das laterais (estilo Framer: suave ao rolar) */
+  .reveal-left,
+  .reveal-right,
+  .reveal-up {
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .reveal-left {
+    transform: translateX(-40px);
+  }
+  
+  .reveal-right {
+    transform: translateX(40px);
+  }
+  
+  .reveal-up {
+    transform: translateY(28px);
+  }
+  
+  .reveal-left.revealed,
+  .reveal-right.revealed,
+  .reveal-up.revealed {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  
+  /* Scroll reveal genérico para qualquer seção (use classe scroll-reveal) */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
