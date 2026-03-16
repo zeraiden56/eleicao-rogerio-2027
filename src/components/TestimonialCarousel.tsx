@@ -3,46 +3,7 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  text: string;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Defensora Pública – Núcleo de Família",
-    role: "Colega de atuação",
-    text: "O Dr. Rogério sempre se destacou pela disponibilidade em auxiliar os colegas, pela seriedade com que trata cada caso e pelo respeito às pessoas assistidas."
-  },
-  {
-    id: 2,
-    name: "Servidor da DPE-MT",
-    role: "Equipe administrativa",
-    text: "Na gestão, demonstra atenção às condições de trabalho e à valorização da equipe, sempre aberto ao diálogo e à construção conjunta de soluções."
-  },
-  {
-    id: 3,
-    name: "Defensor Público do interior",
-    role: "Atuação em comarca do interior",
-    text: "A interiorização da Defensoria só foi possível com planejamento e apoio da gestão. Rogério esteve presente, acompanhando as dificuldades das comarcas."
-  },
-  {
-    id: 4,
-    name: "Colaborador terceirizado",
-    role: "Apoio operacional",
-    text: "Mesmo não sendo servidor efetivo, sempre fui tratado com respeito. Isso faz diferença no clima institucional e no resultado do trabalho."
-  },
-  {
-    id: 5,
-    name: "Estagiária de Direito",
-    role: "Estágio na Defensoria",
-    text: "O contato com a gestão mostrou que é possível unir técnica, sensibilidade com o público e organização administrativa em um mesmo projeto institucional."
-  }
-];
+import { depoimentos, type Depoimento } from "@/data/depoimentos";
 
 const TestimonialCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,14 +11,14 @@ const TestimonialCarousel = () => {
   // autoplay a cada 15s
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+      setCurrentIndex((prev) => (prev + 1) % depoimentos.length);
     }, 15000);
 
     return () => clearInterval(interval);
   }, []);
 
   const goTo = (index: number) => {
-    const total = testimonials.length;
+    const total = depoimentos.length;
     const normalized = ((index % total) + total) % total;
     setCurrentIndex(normalized);
   };
@@ -66,13 +27,14 @@ const TestimonialCarousel = () => {
   const goNext = () => goTo(currentIndex + 1);
 
   const getIndex = (offset: number) => {
-    const total = testimonials.length;
+    const total = depoimentos.length;
     return ((currentIndex + offset) % total + total) % total;
   };
 
-  const renderCard = (testimonial: Testimonial, variant: "prev" | "current" | "next") => {
-    const isCenter = variant === "current";
-
+  const renderCard = (
+    depoimento: Depoimento,
+    variant: "prev" | "current" | "next"
+  ) => {
     const baseClasses =
       "transition-all duration-500 h-full flex flex-col justify-between";
 
@@ -82,18 +44,15 @@ const TestimonialCarousel = () => {
         : "opacity-40 scale-95 bg-card/80 blur-[1px]";
 
     return (
-      <Card
-        key={testimonial.id}
-        className={`${baseClasses} ${variantClasses}`}
-      >
+      <Card key={depoimento.id} className={`${baseClasses} ${variantClasses}`}>
         <div className="p-6 md:p-8">
           <p className="text-muted-foreground mb-4 leading-relaxed">
-            “{testimonial.text}”
+            "{depoimento.texto}"
           </p>
           <div className="mt-4">
-            <p className="font-semibold">{testimonial.name}</p>
+            <p className="font-semibold">{depoimento.nome}</p>
             <p className="text-xs text-muted-foreground mt-1">
-              {testimonial.role}
+              {depoimento.cargo}
             </p>
           </div>
         </div>
@@ -101,9 +60,9 @@ const TestimonialCarousel = () => {
     );
   };
 
-  const current = testimonials[getIndex(0)];
-  const prev = testimonials[getIndex(-1)];
-  const next = testimonials[getIndex(1)];
+  const current = depoimentos[getIndex(0)];
+  const prev = depoimentos[getIndex(-1)];
+  const next = depoimentos[getIndex(1)];
 
   return (
     <div className="relative max-w-5xl mx-auto">
@@ -126,19 +85,20 @@ const TestimonialCarousel = () => {
           size="icon"
           className="rounded-full"
           onClick={goPrev}
+          aria-label="Depoimento anterior"
         >
           <ChevronLeft className="w-5 h-5" />
         </Button>
 
         <div className="flex gap-2">
-          {testimonials.map((t, index) => (
+          {depoimentos.map((d, index) => (
             <button
-              key={t.id}
+              key={d.id}
               onClick={() => goTo(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              className={`h-2.5 rounded-full transition-all duration-300 ${
                 index === currentIndex
                   ? "bg-primary w-7"
-                  : "bg-muted hover:bg-muted-foreground/40"
+                  : "w-2.5 bg-muted hover:bg-muted-foreground/40"
               }`}
               aria-label={`Ir para depoimento ${index + 1}`}
             />
@@ -150,6 +110,7 @@ const TestimonialCarousel = () => {
           size="icon"
           className="rounded-full"
           onClick={goNext}
+          aria-label="Próximo depoimento"
         >
           <ChevronRight className="w-5 h-5" />
         </Button>

@@ -1,37 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
 
 interface PageTransitionProps {
   children: React.ReactNode;
 }
 
 /**
- * Componente que adiciona fade in/fade out em todas as páginas
+ * Transição suave entre páginas.
+ * Usa um fade rápido (100ms) apenas no momento da saída e readere o DOM
+ * diretamente via ref para evitar re-render desnecessário que causava flicker.
+ * Respeita prefers-reduced-motion.
  */
 const PageTransition = ({ children }: PageTransitionProps) => {
   const location = useLocation();
-  const [isVisible, setIsVisible] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Fade out
-    setIsVisible(false);
-    
-    // Após fade out, faz fade in
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 200);
+    const el = ref.current;
+    if (!el) return;
 
-    return () => clearTimeout(timer);
+    const prefersReduced =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) return;
+
+    el.style.opacity = "0";
+    el.style.transform = "translateY(6px)";
+
+    const timer = requestAnimationFrame(() => {
+      el.style.transition =
+        "opacity 0.25s ease-out, transform 0.25s ease-out";
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    });
+
+    return () => cancelAnimationFrame(timer);
   }, [location.pathname]);
 
   return (
-    <div
-      className={cn(
-        "transition-opacity duration-300 ease-in-out",
-        isVisible ? "opacity-100" : "opacity-0"
-      )}
-    >
+    <div ref={ref} style={{ opacity: 1 }}>
       {children}
     </div>
   );

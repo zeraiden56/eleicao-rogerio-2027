@@ -1,4 +1,4 @@
-// src/pages/home/crescimento/EvolucaoComposicaoCargosSection.tsx
+// src/pages/home/quantitativo/EvolucaoComposicaoCargosSection.tsx
 import React, { useMemo, useState } from "react";
 import {
   ResponsiveContainer,
@@ -9,8 +9,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ReferenceLine,
+  defs,
+  linearGradient,
+  stop,
 } from "recharts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,21 +31,15 @@ const cargoKeys = [
 
 type CargoKey = (typeof cargoKeys)[number];
 
-// JSON: { "2006": { cargo: qtd, ... }, ... }
 type RawData = Record<string, Record<CargoKey, number>>;
 
-type ChartRow = {
-  year: string;
-} & Record<CargoKey, number>;
+type ChartRow = { year: string } & Record<CargoKey, number>;
 
 const raw = dataJson as RawData;
 
 const chartData: ChartRow[] = Object.entries(raw)
-  .sort(([a, b]) => Number(a) - Number(b))
-  .map(([year, cargos]) => ({
-    year,
-    ...cargos,
-  }));
+  .sort(([a], [b]) => Number(a) - Number(b))
+  .map(([year, cargos]) => ({ year, ...cargos }));
 
 const colors: Record<CargoKey, string> = {
   Defensores: "#15803d",
@@ -55,7 +51,6 @@ const colors: Record<CargoKey, string> = {
   "Ajudante Geral": "#64748b",
 };
 
-
 type Stats = {
   avgPre2019: number;
   avgFrom2019: number;
@@ -65,19 +60,16 @@ type Stats = {
   relDelta: number | null;
 };
 
-const computeStatsForCargo = (cargo: CargoKey): Stats => {
-  const pre = chartData.filter((row) => Number(row.year) < 2019);
-  const post = chartData.filter((row) => Number(row.year) >= 2019);
+const computeStats = (cargo: CargoKey): Stats => {
+  const avg = (vals: number[]) =>
+    vals.length ? vals.reduce((a, v) => a + v, 0) / vals.length : 0;
 
-  const preValues = pre.map((row) => row[cargo]);
-  const postValues = post.map((row) => row[cargo]);
-
-  const avg = (values: number[]) =>
-    values.length ? values.reduce((acc, v) => acc + v, 0) / values.length : 0;
-
-  const avgPre2019 = avg(preValues);
-  const avgFrom2019 = avg(postValues);
-
+  const avgPre2019 = avg(
+    chartData.filter((r) => Number(r.year) < 2019).map((r) => r[cargo])
+  );
+  const avgFrom2019 = avg(
+    chartData.filter((r) => Number(r.year) >= 2019).map((r) => r[cargo])
+  );
   const q2019 = chartData.find((r) => r.year === "2019")?.[cargo] ?? 0;
   const q2025 = chartData.find((r) => r.year === "2025")?.[cargo] ?? 0;
   const absDelta = q2025 - q2019;
@@ -102,7 +94,7 @@ const StatCard: React.FC<{
       : "text-muted-foreground";
 
   return (
-    <Card className="border-border bg-card shadow-sm hover:shadow-md transition-shadow">
+    <Card className="border-border bg-card shadow-sm">
       <CardContent className="p-4 sm:p-5">
         <div className="flex items-start justify-between mb-1.5">
           <p className="text-xs sm:text-sm font-medium text-muted-foreground">
@@ -123,42 +115,19 @@ const StatCard: React.FC<{
   );
 };
 
-// resumo geral para TODOS os cargos (2025, crescimento vs 2006 e 2019)
-const useResumoAtual = () => {
-  return useMemo(() => {
-    const row2006 = chartData.find((r) => r.year === "2006");
-    const row2019 = chartData.find((r) => r.year === "2019");
-    const row2025 = chartData.find((r) => r.year === "2025");
-
-    return cargoKeys.map((cargo) => {
-      const q2006 = row2006?.[cargo] ?? 0;
-      const q2019 = row2019?.[cargo] ?? 0;
-      const q2025 = row2025?.[cargo] ?? 0;
-
-      const growth06 = q2006 > 0 ? ((q2025 - q2006) / q2006) * 100 : null;
-      const growth19 = q2019 > 0 ? ((q2025 - q2019) / q2019) * 100 : null;
-
-      return { cargo, q2006, q2019, q2025, growth06, growth19 };
-    });
-  }, []);
-};
-
-const formatDelta = (v: number | null) =>
-  v === null
-    ? "—"
-    : `${v >= 0 ? "+" : ""}${v.toFixed(1).replace(".", ",")}%`;
-
 const EvolucaoComposicaoCargosSection: React.FC = () => {
-  const [selectedCargo, setSelectedCargo] = useState<CargoKey | "all">(
-    "Defensores",
-  );
+  const [selectedCargo, setSelectedCargo] = useState<CargoKey>("Defensores");
 
-  const stats = useMemo(() => {
-    if (selectedCargo === "all") return null;
-    return computeStatsForCargo(selectedCargo);
+  const stats = useMemo(() => computeStats(selectedCargo), [selectedCargo]);
+
+  // Eixo Y proporcional ao cargo selecionado
+  const yDomain = useMemo<[number, number]>(() => {
+    const values = chartData.map((row) => row[selectedCargo]);
+    const maxVal = Math.max(...values);
+    return [0, Math.ceil(maxVal * 1.15)];
   }, [selectedCargo]);
 
-  const resumoAtual = useResumoAtual();
+  const color = colors[selectedCargo];
 
   const getTrend = (value: number): "up" | "down" | "neutral" => {
     if (value > 0.5) return "up";
@@ -166,13 +135,10 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
     return "neutral";
   };
 
-  const activeCargo = selectedCargo === "all" ? null : selectedCargo;
-  const activeColor = activeCargo ? colors[activeCargo] : null;
-
   return (
     <section className="w-full space-y-6">
       <Card className="p-6 md:p-8 lg:p-10 bg-card/95 border border-border/60 shadow-sm rounded-2xl">
-        {/* header padronizado com o card de remuneração */}
+        {/* Cabeçalho */}
         <div className="flex flex-col items-center text-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
             <TrendingUp className="w-6 h-6 text-primary" />
@@ -182,9 +148,9 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
               Evolução do número de cargos
             </h3>
             <p className="text-sm text-muted-foreground mt-1 max-w-2xl mx-auto">
-              Cada linha representa a quantidade de pessoas em um cargo ao longo
-              do tempo, de 2006 a 2025. A linha pontilhada marca o ano de 2019,
-              quando a reorganização recente das carreiras começa a aparecer.
+              Selecione um cargo para ver sua evolução histórica de 2006 a 2025.
+              A linha pontilhada marca 2019, quando a reorganização das carreiras
+              começa a aparecer.
             </p>
           </div>
           <span className="inline-flex items-center rounded-full bg-muted px-3 py-1 text-[11px] sm:text-xs font-medium text-muted-foreground">
@@ -194,17 +160,8 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
 
         <CardContent className="space-y-8 p-0">
           <div className="flex flex-col md:flex-row gap-6">
-            {/* filtro vertical à esquerda em telas médias+ */}
+            {/* Filtro vertical — desktop */}
             <div className="hidden md:flex md:flex-col md:w-56 shrink-0 gap-2 pt-1">
-              <Button
-                type="button"
-                size="sm"
-                variant={selectedCargo === "all" ? "default" : "outline"}
-                onClick={() => setSelectedCargo("all")}
-                className="justify-start font-medium"
-              >
-                Todos os cargos
-              </Button>
               {cargoKeys.map((cargo) => (
                 <Button
                   key={cargo}
@@ -219,20 +176,11 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
               ))}
             </div>
 
-            {/* gráfico + resumo à direita */}
-            <div className="flex-1 space-y-6">
-              {/* filtro horizontal só no mobile */}
+            {/* Gráfico */}
+            <div className="flex-1 space-y-4">
+              {/* Filtro horizontal — mobile */}
               <div className="-mx-2 overflow-x-auto pt-1 md:hidden">
                 <div className="flex w-max gap-2 px-2 mb-3">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant={selectedCargo === "all" ? "default" : "outline"}
-                    onClick={() => setSelectedCargo("all")}
-                    className="font-medium"
-                  >
-                    Todos
-                  </Button>
                   {cargoKeys.map((cargo) => (
                     <Button
                       key={cargo}
@@ -254,15 +202,15 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
                     data={chartData}
                     margin={{ top: 5, right: 16, left: 0, bottom: 5 }}
                   >
-                    {activeCargo && activeColor && (
-                      <defs>
-                        <linearGradient id="cargoFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor={activeColor} stopOpacity={0.28} />
-                          <stop offset="90%" stopColor={activeColor} stopOpacity={0.04} />
-                        </linearGradient>
-                      </defs>
-                    )}
+                    <defs>
+                      <linearGradient id="cargoFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={color} stopOpacity={0.25} />
+                        <stop offset="90%" stopColor={color} stopOpacity={0.03} />
+                      </linearGradient>
+                    </defs>
+
                     <CartesianGrid strokeDasharray="3 3" />
+
                     <XAxis
                       dataKey="year"
                       tick={{ fontSize: 11 }}
@@ -273,10 +221,13 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
                       tick={{ fontSize: 11 }}
                       tickMargin={6}
                       tickLine={{ stroke: "hsl(var(--border))" }}
+                      domain={yDomain}
+                      allowDataOverflow={false}
                     />
+
                     <Tooltip
-                      formatter={(value: any) =>
-                        `${Number(value).toLocaleString("pt-BR")} pessoas`
+                      formatter={(value: unknown) =>
+                        [`${Number(value).toLocaleString("pt-BR")} pessoas`, selectedCargo]
                       }
                       labelFormatter={(label) => `Ano ${label}`}
                       contentStyle={{
@@ -290,14 +241,9 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
                         fontWeight: 600,
                         marginBottom: 4,
                       }}
-                      itemStyle={{ color: "hsl(var(--muted-foreground))" }}
+                      itemStyle={{ color }}
                     />
-                    <Legend
-                      wrapperStyle={{
-                        paddingTop: 12,
-                        fontSize: 11,
-                      }}
-                    />
+
                     <ReferenceLine
                       x="2019"
                       stroke="hsl(var(--muted-foreground))"
@@ -312,133 +258,77 @@ const EvolucaoComposicaoCargosSection: React.FC = () => {
                       }}
                     />
 
-                    {activeCargo && activeColor && (
-                      <Area
-                        type="monotone"
-                        dataKey={activeCargo}
-                        stroke="transparent"
-                        fill="url(#cargoFill)"
-                        fillOpacity={1}
-                        isAnimationActive={false}
-                      />
-                    )}
+                    {/* Área de preenchimento sob a linha */}
+                    <Area
+                      type="monotone"
+                      dataKey={selectedCargo}
+                      stroke="transparent"
+                      fill="url(#cargoFill)"
+                      fillOpacity={1}
+                      isAnimationActive={false}
+                    />
 
-                    {cargoKeys.map((cargo) => {
-                      if (activeCargo && cargo === activeCargo) {
-                        return null;
-                      }
-                      const isActive =
-                        selectedCargo === "all" || selectedCargo === cargo;
-
-                      return (
-                        <Line
-                          key={cargo}
-                          type="monotone"
-                          dataKey={cargo}
-                          name={cargo}
-                          stroke={colors[cargo]}
-                          strokeWidth={isActive ? 2.6 : 1.3}
-                          strokeOpacity={isActive ? 1 : 0.25}
-                          dot={false}
-                          activeDot={isActive ? { r: 4, strokeWidth: 2 } : false}
-                          isAnimationActive={false}
-                        />
-                      );
-                    })}
-
-                    {activeCargo && (
-                      <Line
-                        type="monotone"
-                        dataKey={activeCargo}
-                        name={activeCargo}
-                        stroke={activeColor ?? "#15803d"}
-                        strokeWidth={3}
-                        dot={{ r: 3.5 }}
-                        activeDot={{ r: 5 }}
-                        isAnimationActive={false}
-                        label={{
-                          position: "top",
-                          fontSize: 10,
-                          fill: "hsl(var(--foreground))",
-                          formatter: (value: number) =>
-                            Number(value).toLocaleString("pt-BR"),
-                        }}
-                      />
-                    )}
+                    {/* Linha do cargo selecionado — única visível */}
+                    <Line
+                      type="monotone"
+                      dataKey={selectedCargo}
+                      name={selectedCargo}
+                      stroke={color}
+                      strokeWidth={3}
+                      dot={{ r: 3.5, fill: color, strokeWidth: 0 }}
+                      activeDot={{ r: 5, strokeWidth: 2 }}
+                      isAnimationActive={false}
+                      label={{
+                        position: "top",
+                        fontSize: 10,
+                        fill: "hsl(var(--foreground))",
+                        formatter: (value: number) =>
+                          Number(value).toLocaleString("pt-BR"),
+                      }}
+                    />
                   </LineChart>
                 </ResponsiveContainer>
-              </div>
-
-              {/* resumo geral 2025 */}
-              <div className="space-y-3">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground">
-                  Panorama atual (2025)
-                </h3>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {resumoAtual.map((item) => (
-                    <div
-                      key={item.cargo}
-                      className="rounded-xl border bg-muted/50 px-3 py-3 sm:px-4 sm:py-3.5"
-                    >
-                      <p className="text-xs font-medium text-muted-foreground mb-1">
-                        {item.cargo}
-                      </p>
-                      <p className="text-lg font-semibold text-foreground">
-                        {item.q2025.toLocaleString("pt-BR")} pessoas
-                      </p>
-                      <p className="mt-1 text-[11px] text-muted-foreground">
-                        vs 2006: {formatDelta(item.growth06)} · vs 2019:{" "}
-                        {formatDelta(item.growth19)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
 
-          {/* estatísticas detalhadas só do cargo selecionado */}
-          {selectedCargo !== "all" && stats && (
-            <div className="pt-4 border-t border-border">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">
-                Estatísticas do cargo selecionado – {selectedCargo}
-              </h3>
-              <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <StatCard
-                  label="Média antes de 2019"
-                  value={`${stats.avgPre2019.toFixed(1)} pessoas`}
-                  description="Período 2006–2018"
-                />
-                <StatCard
-                  label="Média de 2019 em diante"
-                  value={`${stats.avgFrom2019.toFixed(1)} pessoas`}
-                  description="Período 2019–2025"
-                />
-                <StatCard
-                  label="Variação absoluta"
-                  value={`${stats.absDelta >= 0 ? "+" : ""}${stats.absDelta.toFixed(
-                    0,
-                  )} pessoas`}
-                  trend={getTrend(stats.absDelta)}
-                  description="2019 → 2025"
-                />
-                <StatCard
-                  label="Variação relativa"
-                  value={
-                    stats.relDelta === null
-                      ? "—"
-                      : `${stats.relDelta >= 0 ? "+" : ""}${stats.relDelta
-                          .toFixed(1)
-                          .replace(".", ",")}%`
-                  }
-                  trend={
-                    stats.relDelta !== null ? getTrend(stats.relDelta) : undefined
-                  }
-                  description="Crescimento sobre 2019"
-                />
-              </div>
+          {/* Estatísticas do cargo selecionado */}
+          <div className="pt-4 border-t border-border">
+            <h3 className="text-sm sm:text-base font-semibold text-foreground mb-3">
+              Estatísticas do cargo selecionado —{" "}
+              <span style={{ color }}>{selectedCargo}</span>
+            </h3>
+            <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <StatCard
+                label="Média antes de 2019"
+                value={`${stats.avgPre2019.toFixed(1)} pessoas`}
+                description="Período 2006–2018"
+              />
+              <StatCard
+                label="Média de 2019 em diante"
+                value={`${stats.avgFrom2019.toFixed(1)} pessoas`}
+                description="Período 2019–2025"
+              />
+              <StatCard
+                label="Variação absoluta"
+                value={`${stats.absDelta >= 0 ? "+" : ""}${stats.absDelta.toFixed(0)} pessoas`}
+                trend={getTrend(stats.absDelta)}
+                description="2019 → 2025"
+              />
+              <StatCard
+                label="Variação relativa"
+                value={
+                  stats.relDelta === null
+                    ? "—"
+                    : `${stats.relDelta >= 0 ? "+" : ""}${stats.relDelta
+                        .toFixed(1)
+                        .replace(".", ",")}%`
+                }
+                trend={stats.relDelta !== null ? getTrend(stats.relDelta) : undefined}
+                description="Crescimento sobre 2019"
+              />
             </div>
-          )}
+          </div>
         </CardContent>
       </Card>
     </section>

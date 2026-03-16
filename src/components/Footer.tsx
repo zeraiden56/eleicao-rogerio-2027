@@ -30,7 +30,7 @@ const Footer = () => {
               Rogério Borges Freitas
             </h3>
             <p className="text-primary-foreground/80 mb-3">
-              Candidato a Defensor Público-Geral do Estado de Mato Grosso – Biênio 2026–2028.
+              Candidato a Defensor Público-Geral do Estado de Mato Grosso – Biênio 2027–2028.
             </p>
             <p className="text-primary-foreground/70 text-xs leading-relaxed">
               Experiência na área fim, atuação em gestão e compromisso com o 

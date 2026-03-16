@@ -10,22 +10,25 @@ const scrollToTop = () => {
 
 /**
  * Força a página a rolar para o topo ao montar.
- * Usado em páginas onde o ScrollToTop global não era suficiente (ex.: Gestões, Conselho).
+ * Se a URL contiver um hash (#ancora), o scroll ao topo é ignorado
+ * para permitir que a navegação por âncora funcione corretamente.
  */
 export const useScrollToTopOnMount = () => {
-  useLayoutEffect(() => scrollToTop(), []);
+  const hasHash = typeof window !== "undefined" && window.location.hash !== "";
+
+  useLayoutEffect(() => {
+    if (hasHash) return;
+    scrollToTop();
+  }, [hasHash]);
 
   useEffect(() => {
+    if (hasHash) return;
     scrollToTop();
     const t1 = setTimeout(scrollToTop, 50);
     const t2 = setTimeout(scrollToTop, 150);
-    const t3 = setTimeout(scrollToTop, 350);
-    const t4 = setTimeout(scrollToTop, 600);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
     };
-  }, []);
+  }, [hasHash]);
 };

@@ -1,6 +1,8 @@
 import SectionTitle from "@/components/SectionTitle";
 import SectionContainer from "@/components/SectionContainer";
 import FeatureCard from "@/components/FeatureCard";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import {
   Award,
   BookOpen,
@@ -8,6 +10,7 @@ import {
   Shield,
   TrendingUp,
   Users,
+  ArrowRight,
 } from "lucide-react";
 
 const GestaoResultadosSection = () => {
@@ -80,6 +83,21 @@ const GestaoResultadosSection = () => {
             className="h-full flex flex-col"
           />
         ))}
+      </div>
+
+      {/* CTA contextual */}
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mt-14 max-w-xl mx-auto">
+        <Button asChild variant="default" size="lg" className="w-full sm:w-auto">
+          <Link to="/atuacao-nas-gestoes">
+            Ver atuação nas gestões
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Link>
+        </Button>
+        <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
+          <Link to="/historia-na-defensoria">
+            Trajetória na Defensoria
+          </Link>
+        </Button>
       </div>
     </SectionContainer>
   );

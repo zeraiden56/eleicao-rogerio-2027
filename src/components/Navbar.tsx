@@ -7,8 +7,6 @@ import {
   Home,
   Users,
   History,
-  Briefcase,
-  GraduationCap,
   Target,
   Gavel,
   Search,
@@ -62,9 +60,7 @@ const Navbar = () => {
     { path: "/propostas", label: "Propostas e Eixos", icon: Target, shortLabel: "Propostas" },
     { path: "/chapa", label: "Nossa Chapa", icon: Users, shortLabel: "Chapa" },
     { path: "/historia-na-defensoria", label: "História na Defensoria", icon: History, shortLabel: "História" },
-    { path: "/atuacao-nas-gestoes", label: "Atuação nas Gestões", icon: Briefcase, shortLabel: "Gestões" },
     { path: "/atuacao-no-conselho", label: "Atuação no Conselho", icon: Gavel, shortLabel: "Conselho" },
-    { path: "/formacao", label: "Formação", icon: GraduationCap, shortLabel: "Formação" },
   ];
 
   return (
@@ -143,18 +139,32 @@ const Navbar = () => {
       {/* Global Search */}
       <GlobalSearch open={isSearchOpen} onOpenChange={setIsSearchOpen} />
 
-      {/* MOBILE: só a bolinha do sanduíche */}
-      <div className="lg:hidden pt-4 px-4 flex justify-end">
+      {/* MOBILE: barra com botão de busca e sanduíche */}
+      <div className="lg:hidden pt-3 px-4 flex items-center justify-between gap-2">
+        {/* Botão busca mobile */}
+        <Button
+          variant="ghost"
+          onClick={() => setIsSearchOpen(true)}
+          className="flex-1 justify-start bg-primary/90 text-primary-foreground hover:bg-primary rounded-full px-4 py-2 border border-primary-foreground/20 shadow"
+          aria-label="Buscar no site"
+        >
+          <Search className="w-4 h-4 mr-2 flex-shrink-0" />
+          <span className="text-sm">Buscar...</span>
+        </Button>
+
+        {/* Botão menu sanduíche */}
         <Button
           variant="ghost"
           size="icon"
           className="
-            rounded-full w-11 h-11
+            rounded-full w-11 h-11 flex-shrink-0
             bg-primary/90 text-primary-foreground
             hover:bg-primary
             shadow-lg border border-primary-foreground/20
           "
           onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={isMobileMenuOpen}
         >
           {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </Button>
@@ -162,7 +172,7 @@ const Navbar = () => {
 
       {/* MENU MOBILE DROPDOWN */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden px-4 mt-3">
+        <div className="lg:hidden px-4 mt-2">
           <div className="rounded-2xl bg-primary shadow-xl border border-primary-foreground/20 py-2">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -177,9 +187,9 @@ const Navbar = () => {
                     scrollToTop();
                   }}
                   className={`
-                    flex items-center space-x-3 px-4 py-3 rounded-xl
+                    flex items-center space-x-3 px-4 py-3 rounded-xl mx-1
                     text-sm font-semibold
-                    transition-all duration-300
+                    transition-all duration-200
                     ${
                       isActive
                         ? "bg-primary-foreground text-primary"
@@ -187,11 +197,25 @@ const Navbar = () => {
                     }
                   `}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-5 h-5 flex-shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
+
+            {/* Linha divisória e botão de notícias como atalho */}
+            <div className="border-t border-primary-foreground/15 mx-3 my-1.5" />
+            <Link
+              to="/noticias"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                scrollToTop();
+              }}
+              className="flex items-center space-x-3 px-4 py-3 rounded-xl mx-1 text-sm font-semibold text-primary-foreground/90 hover:bg-primary-foreground/10 hover:text-primary-foreground transition-all duration-200"
+            >
+              <span className="text-base">📰</span>
+              <span>Notícias</span>
+            </Link>
           </div>
         </div>
       )}
