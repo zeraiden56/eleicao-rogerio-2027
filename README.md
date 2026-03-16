@@ -1,6 +1,7 @@
-# Site da campanha — Rogério (Defensor Público-Geral MT)
+# Site de campanha — Dr. Rogério Borges Freitas
+**Candidato a Defensor Público-Geral do Estado de Mato Grosso · Biênio 2027–2028**
 
-Site institucional da campanha de Rogério para Defensor Público-Geral do Estado de Mato Grosso. SPA com navegação por rotas, busca global (Ctrl+K), botão flutuante WhatsApp e layout responsivo.
+SPA institucional de campanha com navegação por rotas, busca global com destaque (Ctrl+K), scroll animado por âncoras, botão flutuante WhatsApp e layout totalmente responsivo.
 
 ---
 
@@ -8,55 +9,66 @@ Site institucional da campanha de Rogério para Defensor Público-Geral do Estad
 
 | Rota | Página | Conteúdo |
 |------|--------|----------|
-| `/` | Home | Hero, Equipe, Gestão e Resultados, Crescimento (evolução remuneração), Resumo Quantitativo, Apoios, Depoimentos, CTA, Notícias, Galeria |
-| `/propostas` | Propostas | Eixos do plano de gestão; link para PDF do plano em nova aba |
+| `/` | Home | Hero · Equipe de Gestão · Evolução Quantitativa · Crescimento da Defensoria · 79 Comarcas · Premiações e Selos · Propostas e Eixos (preview) · CTA Final |
+| `/propostas` | Propostas e Eixos | 5 eixos do plano de gestão com detalhes; botão de download do PDF |
 | `/plano-de-gestao` | Redirect | Redireciona para `/propostas` |
-| `/chapa` | Chapa | Nossa Chapa |
-| `/historia-na-defensoria` | História na Defensoria | Trajetória na Defensoria |
-| `/atuacao-nas-gestoes` | Atuação nas Gestões | Atuação nas gestões |
-| `/atuacao-no-conselho` | Atuação no Conselho | Atuação no Conselho |
-| `/formacao` | Formação | Formação acadêmica e profissional |
-| `/lattes` | Lattes | Currículo Lattes |
-| `/noticias` | Notícias | Listagem de notícias |
+| `/chapa` | Nossa Chapa | Perfil completo dos 4 candidatos com foto, trajetória e formação; suporte a âncora (`/chapa#luziane`, `/chapa#paulo`, `/chapa#paula`, `/chapa#rogerio`) |
+| `/historia-na-defensoria` | História na Defensoria | Linha do tempo da trajetória de Rogério na DPE-MT |
+| `/atuacao-no-conselho` | Atuação no Conselho | Participação no Conselho Superior da Defensoria |
+| `/lattes` | Currículo Lattes | Link para o Lattes e publicações acadêmicas |
+| `/noticias` | Notícias | Listagem de notícias e cobertura de imprensa |
 | `/noticias/:slug` | Notícia | Detalhe da notícia por slug |
-| `/quantitativo` | Quantitativo | Dados e gráficos: evolução de cargos (2006–2025), evolução remuneratória |
+| `/quantitativo` | Dados Quantitativos | Gráfico interativo de evolução de cargos (2006–2025) com eixo Y proporcional por cargo |
 | `*` | 404 | Página não encontrada |
+
+> **Páginas removidas da navegação principal** (rotas ainda existem): `/formacao`, `/atuacao-nas-gestoes`
+
+---
+
+## Seções da Home (ordem)
+
+1. **Hero** — foto de Rogério, título da candidatura, strips de fotos animadas (pasta `SELECIONADAS`, 1200×800 px)
+2. **Equipe de Gestão** — cards dos 4 candidatos com foto estática, cargo na candidatura × cargo atual; link âncora para `/chapa#id`
+3. **Evolução Quantitativa** — gráfico Recharts com eixo Y adaptativo por cargo selecionado
+4. **Crescimento da Defensoria** — evolução remuneratória e dados históricos
+5. **79 Comarcas** — marco constitucional (EC 80/2014), galeria de Cotriguaçu, citação de Luziane
+6. **Premiações e Selos** — 5 selos estáticos clicáveis; modal com logo + descrição + navegação por setas (via `createPortal`)
+7. **Propostas e Eixos (preview)** — 5 eixos com número, título e resumo; link para `/propostas`
+8. **CTA Final** — botões "Conhecer a Chapa" e "Ver Propostas"
 
 ---
 
 ## Tecnologias
 
 ### Build e runtime
-- **Vite 5** — bundler e dev server (porta 8080, host `::`)
+- **Vite 5** — bundler e dev server
 - **React 18** + **TypeScript**
-- **React Router 6** — rotas SPA
+- **React Router 6** — rotas SPA com suporte a hash anchors
 
 ### UI e estilo
-- **Tailwind CSS** — utilitários e tema (cores, tipografia)
-- **shadcn/ui** — componentes baseados em **Radix UI** (accordion, dialog, tabs, carousel, sheet, dropdown, etc.)
+- **Tailwind CSS** — utilitários e tema customizado (CSS variables para cores primárias)
+- **shadcn/ui** — componentes baseados em **Radix UI** (dialog, tabs, card, command, sheet, etc.)
 - **Lucide React** — ícones
 - **tailwindcss-animate** + **class-variance-authority** — animações e variantes
-- **next-themes** — tema claro/escuro (se usado)
 
-### Dados, formulários e estado
+### Dados e estado
 - **TanStack Query (React Query)** — cache e estado assíncrono
-- **React Hook Form** + **Zod** + **@hookform/resolvers** — formulários e validação
+- **React Hook Form** + **Zod** — formulários e validação
 
-### Gráficos e visualização
-- **Recharts** — gráficos na página Quantitativo e seções de crescimento/evolução
+### Gráficos
+- **Recharts** — gráficos na página `/quantitativo` e seções de crescimento
 
 ### Outros
-- **date-fns** — datas
-- **embla-carousel-react** — carrosséis (depoimentos, vídeos, etc.)
-- **cmdk** — busca global (Command palette)
+- **date-fns** — manipulação de datas
+- **embla-carousel-react** — carrosséis
+- **cmdk** — paleta de busca global (Command palette)
 - **sonner** — toasts
-- **vaul** — drawer
-- **react-resizable-panels** — painéis redimensionáveis (se usado)
+- **vaul** — drawer mobile
 
 ### Dev
 - **ESLint** (typescript-eslint, react-hooks, react-refresh)
 - **PostCSS** + **Autoprefixer**
-- **@tailwindcss/typography** — estilos para conteúdo em prosa
+- **@tailwindcss/typography**
 
 ---
 
@@ -64,64 +76,61 @@ Site institucional da campanha de Rogério para Defensor Público-Geral do Estad
 
 ```
 frontend/
-├── public/                    # Assets estáticos
-│   └── pdf/                   # PDFs (ex.: plano-de-gestao.pdf)
+├── public/
+│   ├── pdf/                        # plano-de-gestao.pdf
+│   ├── selos/                      # Imagens dos 5 selos (transparencia, a3p, esperança garcia)
+│   ├── luziane/ paulo/ paula/      # Fotos dos candidatos
+│   └── rogerio/
+│       ├── SELECIONADAS/           # Fotos do hero (1200×800 px, formato 3:2)
+│       └── 2025/                   # Fotos de eventos 2025
 ├── src/
-│   ├── components/            # Componentes reutilizáveis
-│   │   ├── ui/                # Componentes shadcn (button, card, dialog, etc.)
-│   │   ├── Navbar.tsx         # Menu principal + atalho busca (Ctrl+K)
+│   ├── components/
+│   │   ├── ui/                     # Componentes shadcn/ui
+│   │   ├── Navbar.tsx              # Navegação + busca Ctrl+K
 │   │   ├── Footer.tsx
 │   │   ├── FloatingWhatsAppButton.tsx
-│   │   ├── GlobalSearch.tsx
+│   │   ├── GlobalSearch.tsx        # Busca full-text (cmdk)
+│   │   ├── SearchHighlighter.tsx   # Destaca termo pesquisado na página destino
+│   │   ├── ScrollToTop.tsx         # Reset de scroll (respeita hash e searchQuery)
 │   │   ├── PageTransition.tsx
-│   │   ├── SectionTransition.tsx
-│   │   ├── SectionContainer.tsx / SectionTitle.tsx
-│   │   ├── HeroLoader.tsx, LazyImage.tsx, RotatingPhoto.tsx
-│   │   ├── AnimatedCounter.tsx, StatCard.tsx, EixoCard.tsx, EixoDetalhe.tsx
-│   │   ├── TestimonialCarousel.tsx, VideoCarousel.tsx
-│   │   └── NavLink.tsx
-│   ├── data/                  # Dados estáticos e conteúdo
-│   │   ├── news.ts            # Notícias
-│   │   ├── gallery.ts         # Galeria
-│   │   ├── heroPhotos.ts      # Fotos do hero
+│   │   ├── SectionTransition.tsx   # Transições de cor entre seções (verde ↔ branco)
+│   │   ├── LazyImage.tsx           # Lazy loading com IntersectionObserver
+│   │   ├── EixoCard.tsx            # Card de eixo do plano de gestão
+│   │   └── AnimatedCounter.tsx / StatCard.tsx
+│   ├── data/
+│   │   ├── equipe.ts               # Dados dos 4 candidatos (foto, cargos, bio)
+│   │   ├── eixos.ts                # 5 eixos do plano de gestão
+│   │   ├── heroPhotos.ts           # Lista de fotos do hero (SELECIONADAS)
 │   │   ├── rogerioTimelinePhotos.ts
-│   │   ├── eixoIcons.ts       # Ícones dos eixos
-│   │   ├── searchContent.ts   # Conteúdo indexado para busca global
-│   │   ├── curiosidades.ts
-│   │   ├── quantitativo_cargos_2006_2025.json
-│   │   ├── evolucao_percentual_cargos_2006_2025.json
-│   │   ├── evolucao_salarial_defensoria.json
-│   │   └── indices_inflacao.json
+│   │   ├── searchContent.ts        # Índice de busca full-text por página
+│   │   ├── news.ts                 # Notícias
+│   │   └── *.json                  # Dados quantitativos (cargos, salários, inflação)
 │   ├── hooks/
-│   │   ├── useScrollToTopOnMount.ts
-│   │   ├── useRevealOnScroll.ts / useRevealOnScrollSide.ts
-│   │   ├── useEixoAtivo.ts
-│   │   └── use-mobile.tsx
-│   ├── lib/
-│   │   └── utils.ts           # cn(), etc.
-│   ├── pages/                 # Uma página por rota
-│   │   ├── Home.tsx           # Composição das seções da home
-│   │   ├── home/              # Seções da home
-│   │   │   ├── HeroSection.tsx, EquipeSection.tsx, GestaoResultadosSection.tsx
-│   │   │   ├── CrescimentoSection.tsx, crescimento/, quantitativo/
-│   │   │   ├── ResumoQuantitativoSection.tsx, ApoiosSection.tsx
-│   │   │   ├── DepoimentosSection.tsx, CtaFinalSection.tsx
-│   │   │   ├── NoticiasSection.tsx, GaleriaSection.tsx
-│   │   │   └── SobreCampanhaSection.tsx, HeroPhotoStrips.tsx
-│   │   ├── Propostas.tsx, Chapa.tsx, NotFound.tsx
-│   │   ├── HistoriaNaDefensoria.tsx, AtuacaoNasGestoes.tsx, AtuacaoNoConselho.tsx
-│   │   ├── Formacao.tsx, Lattes.tsx
-│   │   ├── Noticias.tsx, NoticiaDetalhe.tsx
+│   │   ├── useScrollToTopOnMount.ts  # Scroll ao topo (ignora hash)
+│   │   └── useRevealOnScrollSide.ts  # Animações de entrada via IntersectionObserver
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   ├── home/
+│   │   │   ├── HeroSection.tsx
+│   │   │   ├── HeroPhotoStrips.tsx
+│   │   │   ├── EquipeSection.tsx
+│   │   │   ├── ComarcasSection.tsx       # Seção "79 Comarcas" (EC 80/2014)
+│   │   │   ├── SelosSection.tsx          # Selos estáticos + modal
+│   │   │   ├── PropostasPreviewSection.tsx
+│   │   │   ├── CtaFinalSection.tsx
+│   │   │   ├── crescimento/              # Seção crescimento da Defensoria
+│   │   │   └── quantitativo/             # Gráfico de evolução de cargos
+│   │   ├── Chapa.tsx                     # Scroll por âncora (/chapa#id)
+│   │   ├── Propostas.tsx
+│   │   ├── HistoriaNaDefensoria.tsx
+│   │   ├── AtuacaoNoConselho.tsx
 │   │   └── ...
-│   ├── App.tsx                # Rotas, layout (Navbar + main + Footer), providers
+│   ├── App.tsx                           # Rotas, layout, SearchHighlighter
 │   ├── main.tsx
 │   └── index.css
-├── components.json            # Config shadcn
-├── package.json
 ├── vite.config.ts
 ├── tailwind.config.ts
-├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
-└── README.md
+└── package.json
 ```
 
 ---
@@ -130,9 +139,9 @@ frontend/
 
 ```bash
 # Instalar dependências
-npm i
+npm install
 
-# Desenvolvimento (porta 8080)
+# Desenvolvimento (porta 8080 — usar apenas localmente, nunca expor publicamente)
 npm run dev
 
 # Build de produção
@@ -144,3 +153,39 @@ npm run preview
 # Lint
 npm run lint
 ```
+
+---
+
+## Deploy
+
+O site é servido como SPA estática pelo **Nginx**, com `try_files $uri $uri/ /index.html` para suporte às rotas client-side.
+
+```
+Build: npm run build → frontend/dist/
+Nginx root: /srv/eleicao-rogerio/frontend/dist
+SSL: Let's Encrypt (Certbot) — TLS 1.2/1.3
+```
+
+### Atualizar o site em produção
+
+```bash
+cd /srv/eleicao-rogerio/frontend
+git pull origin main
+npm run build
+# nginx recarrega automaticamente os arquivos estáticos
+```
+
+---
+
+## Busca global
+
+- Atalho: **Ctrl+K** (ou ícone na navbar)
+- Busca full-text em título, conteúdo e keywords de cada página (`src/data/searchContent.ts`)
+- Ao selecionar um resultado, navega para a página e **destaca o termo pesquisado** com fundo amarelo (marca-texto), rolando automaticamente até a primeira ocorrência
+- O destaque desaparece gradualmente após 6 segundos
+
+---
+
+## Navegação por âncora
+
+Ao clicar em um candidato na seção **Equipe de Gestão** (home), o usuário é redirecionado para `/chapa#<id>` e a página rola suavemente até a seção do candidato. IDs disponíveis: `rogerio`, `luziane`, `paulo`, `paula`.
