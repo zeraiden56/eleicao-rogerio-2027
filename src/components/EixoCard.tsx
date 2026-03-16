@@ -1,23 +1,23 @@
-import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface EixoCardProps {
   id: string;
   title: string;
-  icon: LucideIcon;
+  order: number;
   isActive: boolean;
   onClick: () => void;
 }
 
 /**
- * Card individual para cada eixo do plano de gestão
+ * Card individual para cada eixo do plano de gestão.
+ * Exibe o número do eixo em vez de ícone para leitura rápida.
  */
-const EixoCard = ({ id, title, icon: Icon, isActive, onClick }: EixoCardProps) => {
+const EixoCard = ({ id, title, order, isActive, onClick }: EixoCardProps) => {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "text-left rounded-2xl p-6 transition-all duration-300",
+        "text-left rounded-2xl p-5 transition-all duration-200 w-full",
         "bg-primary-foreground text-foreground",
         "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
         isActive
@@ -25,28 +25,24 @@ const EixoCard = ({ id, title, icon: Icon, isActive, onClick }: EixoCardProps) =
           : "hover:shadow-md hover:scale-[1.01]"
       )}
       aria-pressed={isActive}
-      aria-label={`Eixo ${id}: ${title}`}
+      aria-label={`Eixo ${order}: ${title}`}
     >
       <div className="flex items-start gap-4">
+        {/* Número do eixo */}
         <div
           className={cn(
-            "w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300",
-            isActive ? "bg-primary/20" : "bg-primary/10"
+            "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-200",
+            isActive ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
           )}
         >
-          <Icon
-            className={cn(
-              "w-6 h-6 transition-colors duration-300",
-              isActive ? "text-primary" : "text-primary/80"
-            )}
-            aria-hidden="true"
-          />
+          <span className="text-xl font-black leading-none">{order}</span>
         </div>
-        <div className="flex-1">
-          <p className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wide">
+
+        <div className="flex-1 min-w-0">
+          <p className="text-[10px] font-bold text-muted-foreground mb-1 uppercase tracking-wide">
             {id.toUpperCase()}
           </p>
-          <h3 className="font-bold text-base leading-snug">{title}</h3>
+          <h3 className="font-bold text-sm leading-snug">{title}</h3>
         </div>
       </div>
     </button>

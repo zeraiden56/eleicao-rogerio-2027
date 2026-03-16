@@ -1,7 +1,7 @@
 /**
- * Índice de conteúdo para busca global
- * Contém texto extraído de todas as páginas para busca full-text
- * Ignora gráficos e dados numéricos complexos
+ * Índice de conteúdo para busca global.
+ * Contém texto extraído de todas as páginas para busca full-text.
+ * Ignora gráficos e dados numéricos complexos.
  */
 
 export interface SearchContentItem {
@@ -9,11 +9,51 @@ export interface SearchContentItem {
   path: string;
   title: string;
   category: string;
-  content: string[]; // Array de strings com conteúdo indexável
+  content: string[];
   keywords: string[];
 }
 
 export const searchContentIndex: SearchContentItem[] = [
+  {
+    id: "home",
+    path: "/",
+    title: "Início",
+    category: "Navegação",
+    content: [
+      "Dr. Rogério Borges Freitas",
+      "Candidato a Defensor Público-Geral do Estado de Mato Grosso",
+      "Continuidade, responsabilidade e foco na atividade-fim",
+      "Biênio 2027–2028",
+      "79 comarcas",
+      "Defensoria em todas as comarcas de Mato Grosso",
+      "Emenda Constitucional nº 80/2014",
+      "Premiações e Selos",
+      "Selo Qualidade em Transparência",
+      "Selo Esperança Garcia",
+      "A3P 2024",
+    ],
+    keywords: [
+      "inicio",
+      "home",
+      "candidato",
+      "rogerio",
+      "defensor",
+      "geral",
+      "mt",
+      "mato grosso",
+      "dpe",
+      "dpe-mt",
+      "dpmt",
+      "comarcas",
+      "79",
+      "selos",
+      "premiações",
+      "transparencia",
+      "transparência",
+      "esperança garcia",
+      "a3p",
+    ],
+  },
   {
     id: "chapa",
     path: "/chapa",
@@ -33,7 +73,27 @@ export const searchContentIndex: SearchContentItem[] = [
       "Paula Ferreira Fernandes",
       "Segunda Subdefensora Pública-Geral",
     ],
-    keywords: ["chapa", "equipe", "membros", "candidato", "rogerio", "maria", "paulo", "paula"],
+    keywords: [
+      "chapa",
+      "equipe",
+      "membros",
+      "candidato",
+      "rogerio",
+      "rogério",
+      "borges",
+      "freitas",
+      "maria",
+      "luziane",
+      "paulo",
+      "marquezini",
+      "paula",
+      "fernandes",
+      "subdefensor",
+      "subdefensora",
+      "defensora",
+      "geral",
+      "secretária",
+    ],
   },
   {
     id: "propostas",
@@ -54,13 +114,31 @@ export const searchContentIndex: SearchContentItem[] = [
       "Digitalização completa dos processos",
       "Qualidade no Atendimento",
       "Planejamento Estratégico",
+      "Assessor Jurídico por gabinete",
+      "auxílio-saúde",
+      "teletrabalho",
+      "IA inteligência artificial",
     ],
-    keywords: ["propostas", "plano", "gestão", "objetivos", "fortalecimento"],
+    keywords: [
+      "propostas",
+      "plano",
+      "gestão",
+      "objetivos",
+      "fortalecimento",
+      "eixos",
+      "programa",
+      "saúde",
+      "tecnologia",
+      "ia",
+      "inteligência artificial",
+      "transparência",
+      "capacitação",
+    ],
   },
   {
     id: "plano",
     path: "/propostas",
-    title: "Propostas e Plano de Gestão",
+    title: "Plano de Gestão (PDF)",
     category: "Conteúdo",
     content: [
       "Plano de Gestão 2027–2028",
@@ -71,8 +149,19 @@ export const searchContentIndex: SearchContentItem[] = [
       "Fortalecimento Institucional e Transparência",
       "Inovação e Modernização",
       "Atendimento e Acesso à Justiça",
+      "Baixar Plano de Gestão",
     ],
-    keywords: ["plano", "gestão", "eixos", "2027", "2028", "gabinetes"],
+    keywords: [
+      "plano",
+      "pdf",
+      "gestão",
+      "eixos",
+      "2027",
+      "2028",
+      "gabinetes",
+      "baixar",
+      "documento",
+    ],
   },
   {
     id: "historia",
@@ -88,21 +177,19 @@ export const searchContentIndex: SearchContentItem[] = [
       "Primeiro Subdefensor Público-Geral",
       "Ordenador de Despesas",
       "Candidatura a Defensor Público-Geral",
+      "20 anos na Defensoria Pública",
     ],
-    keywords: ["história", "trajetória", "carreira", "comarcas"],
-  },
-  {
-    id: "gestoes",
-    path: "/atuacao-nas-gestoes",
-    title: "Atuação nas Gestões",
-    category: "Trajetória",
-    content: [
-      "Atuação nas Gestões",
-      "Primeiro Subdefensor Público-Geral",
-      "Ordenador de Despesas",
-      "resultados de gestão",
+    keywords: [
+      "história",
+      "trajetória",
+      "carreira",
+      "comarcas",
+      "interior",
+      "corregedor",
+      "subdefensor",
+      "ingresso",
+      "defensoria",
     ],
-    keywords: ["gestões", "atuação", "resultados"],
   },
   {
     id: "conselho",
@@ -111,48 +198,97 @@ export const searchContentIndex: SearchContentItem[] = [
     category: "Trajetória",
     content: [
       "Atuação no Conselho",
+      "Conselho Superior da Defensoria",
+      "decisões colegiadas",
+      "deliberações",
+      "representação institucional",
+    ],
+    keywords: [
+      "conselho",
+      "superior",
       "decisões",
       "deliberações",
+      "colegiado",
+      "conselho superior",
     ],
-    keywords: ["conselho", "decisões", "deliberações"],
   },
   {
-    id: "formacao",
-    path: "/formacao",
-    title: "Formação",
+    id: "lattes",
+    path: "/lattes",
+    title: "Currículo Lattes",
     category: "Informações",
     content: [
-      "Formação acadêmica do Dr. Rogério Borges Freitas",
-      "Doutorado em Ciências Jurídicas",
-      "Mestrado em Ciências Jurídicas",
-      "Pós-graduação",
-      "Graduação em Ciências Jurídicas",
-      "cursos",
-      "trajetória acadêmica",
+      "Currículo Lattes",
+      "publicações acadêmicas",
+      "artigos",
+      "pesquisa científica",
     ],
-    keywords: ["formação", "acadêmica", "cursos", "rogerio", "trajetória", "doutorado", "mestrado"],
+    keywords: ["lattes", "currículo", "publicações", "artigos", "acadêmico", "pesquisa"],
+  },
+  {
+    id: "noticias",
+    path: "/noticias",
+    title: "Notícias",
+    category: "Navegação",
+    content: [
+      "Cobertura de imprensa",
+      "matérias sobre a atuação",
+      "doutorado",
+      "Selo Diamante de Transparência",
+      "expansão para todas as comarcas",
+      "capacitação de defensores",
+    ],
+    keywords: [
+      "notícias",
+      "noticias",
+      "imprensa",
+      "matérias",
+      "novidades",
+      "atualizações",
+    ],
+  },
+  {
+    id: "quantitativo",
+    path: "/quantitativo",
+    title: "Dados Quantitativos",
+    category: "Conteúdo",
+    content: [
+      "Evolução quantitativa da Defensoria",
+      "crescimento do quadro de defensores",
+      "analistas e técnicos",
+      "evolução salarial",
+      "gráficos",
+      "dados históricos 2006 a 2025",
+    ],
+    keywords: [
+      "quantitativo",
+      "dados",
+      "gráficos",
+      "crescimento",
+      "evolução",
+      "cargos",
+      "defensores",
+      "remuneração",
+      "salário",
+    ],
   },
 ];
 
 /**
- * Busca conteúdo dentro do índice
- * Case-insensitive, busca em título, conteúdo e keywords
+ * Busca conteúdo dentro do índice.
+ * Case-insensitive, busca em título, conteúdo e keywords.
  */
 export const searchInContent = (query: string): SearchContentItem[] => {
   if (!query.trim()) return searchContentIndex;
 
   const queryLower = query.toLowerCase().trim();
-  
+
   return searchContentIndex.filter((item) => {
-    // Busca no título
     if (item.title.toLowerCase().includes(queryLower)) return true;
-    
-    // Busca nas keywords
-    if (item.keywords.some((kw) => kw.toLowerCase().includes(queryLower))) return true;
-    
-    // Busca no conteúdo (array de strings)
-    if (item.content.some((text) => text.toLowerCase().includes(queryLower))) return true;
-    
+    if (item.keywords.some((kw) => kw.toLowerCase().includes(queryLower)))
+      return true;
+    if (item.content.some((text) => text.toLowerCase().includes(queryLower)))
+      return true;
     return false;
   });
 };

@@ -47,8 +47,31 @@ const timelineData = [
   {
     year: "2025",
     title: "Candidatura a Defensor Público-Geral",
-    description: "Biênio 2026–2028",
+    description: "Biênio 2027–2028",
     details: "Experiência acumulada na área fim e na gestão, compromisso com transparência e fortalecimento da instituição.",
+  },
+];
+
+const destaques = [
+  {
+    icon: Briefcase,
+    title: "Mutirões de Atendimento",
+    description: "Participação ativa em inúmeros mutirões, levando assistência jurídica a comunidades remotas de Mato Grosso.",
+  },
+  {
+    icon: Award,
+    title: "Reconhecimento Institucional",
+    description: "Título de Cidadão Mato-grossense (ALMT, 2013); notas de elogio e participação em bancas de concurso.",
+  },
+  {
+    icon: Users,
+    title: "Projetos Inovadores",
+    description: "Idealizou e implementou projetos que modernizaram o atendimento e ampliaram o acesso à justiça.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Formação de Novos Defensores",
+    description: "Membro da banca examinadora do exame oral do V e do VI Concursos de Defensor Público de MT (2016 e 2023).",
   },
 ];
 
@@ -58,83 +81,58 @@ const HistoriaNaDefensoria = () => {
 
   return (
     <main className="min-h-screen pt-24">
-      {/* Introdução - BRANCO */}
-      <SectionContainer background="default" padding="md" maxWidth="xl">
-        <div className="scroll-reveal">
-          <SectionTitle centered subtitle="Uma trajetória de mais de 20 anos dedicados à instituição">
-            História na Defensoria
-          </SectionTitle>
-          <Card className="max-w-4xl mx-auto p-8 md:p-12">
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p className="text-lg">
-                A trajetória do Dr. Rogério Borges Freitas na Defensoria Pública do Estado de
-                Mato Grosso é marcada por dedicação, comprometimento e constante busca pela
-                excelência no atendimento à população.
-              </p>
-              <p>
-                Desde o ingresso na carreira, sempre demonstrou vocação para o serviço público
-                e profundo respeito pelas pessoas atendidas pela instituição. Sua atuação se
-                destaca pela combinação entre conhecimento técnico, sensibilidade social e
-                capacidade de gestão.
-              </p>
-              <p>
-                Ao longo dos anos, acumulou experiências tanto na área fim quanto em diversos
-                cargos de gestão, o que lhe proporciona visão ampla e profunda dos desafios
-                e potencialidades da Defensoria Pública.
-              </p>
-            </div>
-          </Card>
-        </div>
-      </SectionContainer>
-
       {/* Linha do Tempo - VERDE */}
       <SectionContainer background="primary" padding="md" maxWidth="xl">
         <SectionTitle
           centered
           titleClassName="text-primary-foreground"
           subtitleClassName="text-primary-foreground/80"
-          subtitle="Principais marcos da trajetória profissional"
+          subtitle="Uma trajetória de mais de 20 anos dedicados à Defensoria Pública do Estado de Mato Grosso"
         >
-          Linha do Tempo
+          História na Defensoria
         </SectionTitle>
 
         <div className="max-w-4xl mx-auto mt-12 relative">
+          {/* Linha vertical da timeline */}
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary-foreground/20 hidden md:block" />
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {timelineData.map((item, index) => (
               <div
                 key={index}
                 className="relative pl-0 md:pl-20 scroll-reveal"
                 style={{ transitionDelay: `${index * 70}ms` }}
               >
-                <div className="absolute left-0 md:left-5 top-6 w-12 h-12 bg-primary-foreground rounded-full flex items-center justify-center shadow-lg hidden md:flex">
+                {/* Ícone da timeline */}
+                <div className="absolute left-0 md:left-5 top-6 w-12 h-12 bg-primary-foreground rounded-full flex items-center justify-center shadow-lg hidden md:flex flex-shrink-0">
                   <Calendar className="w-6 h-6 text-primary" />
                 </div>
 
-                <Card className="p-6 card-hover bg-background border-border/60 overflow-hidden relative">
+                <Card className="p-6 bg-background border-border/60 rounded-2xl overflow-hidden relative">
                   <span
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-lg"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-2xl"
                     aria-hidden="true"
                   />
 
                   <div className="flex flex-col md:flex-row gap-4 pl-4">
-                    <div className="w-full md:w-48 h-48 rounded-lg overflow-hidden border border-border/60 flex-shrink-0 bg-muted/30">
+                    {/* Foto */}
+                    <div className="w-full md:w-44 h-44 rounded-xl overflow-hidden border border-border/60 flex-shrink-0 bg-muted/30">
                       <LazyImage
                         src={timelinePhotos[index]}
-                        alt={`Rogério Borges Freitas - ${item.year}`}
+                        alt={`Rogério Borges Freitas — ${item.year}`}
                         className="w-full h-full object-cover"
                       />
                     </div>
 
+                    {/* Conteúdo */}
                     <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-start gap-4">
-                        <span className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-full font-bold w-fit">
+                      <div className="flex flex-col md:flex-row md:items-start gap-3">
+                        <span className="inline-block px-4 py-1.5 bg-primary text-primary-foreground rounded-full font-bold text-sm w-fit flex-shrink-0">
                           {item.year}
                         </span>
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                          <p className="text-foreground mb-3">{item.description}</p>
+                          <h3 className="text-lg font-bold mb-1">{item.title}</h3>
+                          <p className="text-foreground text-sm mb-2">{item.description}</p>
                           <p className="text-sm text-muted-foreground">{item.details}</p>
                         </div>
                       </div>
@@ -153,26 +151,28 @@ const HistoriaNaDefensoria = () => {
           Destaques da Trajetória
         </SectionTitle>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-5xl mx-auto">
-          {[
-            { title: "Mutirões de Atendimento", description: "Participação ativa em inúmeros mutirões, levando assistência jurídica a comunidades remotas" },
-            { title: "Projetos Inovadores", description: "Idealizou e implementou projetos que modernizaram o atendimento e ampliaram o acesso à justiça" },
-            { title: "Reconhecimento Institucional", description: "Título de Cidadão Mato-grossense (ALMT, 2013); notas de elogio e participação em bancas de concurso" },
-            { title: "Formação de Novos Defensores", description: "Membro da banca examinadora do exame oral do V e do VI Concursos de Defensor Público de MT (2016 e 2023)" },
-          ].map((item, index) => {
-            const icons = [Briefcase, Award, Users, GraduationCap];
-            const Icon = icons[index % icons.length];
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-12 max-w-5xl mx-auto">
+          {destaques.map((item, index) => {
+            const Icon = item.icon;
             return (
               <Card
                 key={index}
-                className="p-6 card-hover scroll-reveal"
+                className="p-6 border border-border/60 rounded-2xl overflow-hidden relative scroll-reveal"
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-primary" />
+                <span
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-2xl"
+                  aria-hidden="true"
+                />
+                <div className="flex items-start gap-4 pl-4">
+                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold mb-1">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.description}</p>
               </Card>
             );
           })}

@@ -4,10 +4,19 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { newsItems } from "@/data/news";
+import { ArrowRight } from "lucide-react";
 
-const NoticiasSection = () => {
+interface NoticiasSectionProps {
+  /** Limita quantos itens são exibidos. Sem limite por padrão. */
+  limit?: number;
+}
+
+const NoticiasSection = ({ limit }: NoticiasSectionProps) => {
+  const items = limit ? newsItems.slice(0, limit) : newsItems;
+  const showCta = limit !== undefined && newsItems.length > limit;
+
   return (
-    <section className="py-20 bg-muted">
+    <section className="py-20 bg-muted/40">
       <div className="container max-w-6xl mx-auto px-4">
         <SectionTitle
           centered
@@ -17,17 +26,18 @@ const NoticiasSection = () => {
         </SectionTitle>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-          {newsItems.map((item, index) => (
+          {items.map((item, index) => (
             <Card
               key={item.slug}
-              className="card-hover fade-in-up bg-card/95 border border-border/60 overflow-hidden flex flex-col"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className="scroll-reveal card-hover bg-card/95 border border-border/60 overflow-hidden flex flex-col"
+              style={{ transitionDelay: `${index * 80}ms` }}
             >
               {/* Imagem de capa */}
-              <div className="relative h-36 -mx-6 -mt-6 mb-4 overflow-hidden">
+              <div className="relative h-40 -mx-6 -mt-6 mb-4 overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
+                  loading="lazy"
                   className="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105"
                 />
               </div>
@@ -55,6 +65,17 @@ const NoticiasSection = () => {
             </Card>
           ))}
         </div>
+
+        {showCta && (
+          <div className="flex justify-center mt-10">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/noticias">
+                Ver todas as notícias
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

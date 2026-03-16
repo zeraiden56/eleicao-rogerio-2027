@@ -4,8 +4,14 @@ import SectionTitle from "@/components/SectionTitle";
 import { X } from "lucide-react";
 import { galleryItems, GalleryItem } from "@/data/gallery";
 
-const GaleriaSection = () => {
+interface GaleriaSectionProps {
+  /** Limita quantos itens são exibidos no grid. Sem limite por padrão. */
+  limit?: number;
+}
+
+const GaleriaSection = ({ limit }: GaleriaSectionProps) => {
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const items = limit ? galleryItems.slice(0, limit) : galleryItems;
 
   return (
     <section className="py-20 bg-background">
@@ -19,13 +25,13 @@ const GaleriaSection = () => {
           </SectionTitle>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-12">
-            {galleryItems.map((image, index) => (
+            {items.map((image, index) => (
               <button
                 key={image.src}
                 type="button"
                 onClick={() => setSelectedImage(image)}
-                className="aspect-square rounded-lg overflow-hidden card-hover fade-in-up bg-card focus:outline-none focus:ring-2 focus:ring-primary/60"
-                style={{ animationDelay: `${index * 0.05}s` }}
+                className="scroll-reveal aspect-square rounded-lg overflow-hidden card-hover bg-card focus:outline-none focus:ring-2 focus:ring-primary/60"
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 <img
                   src={image.src}
@@ -46,8 +52,17 @@ const GaleriaSection = () => {
 
       {/* Modal da galeria */}
       {selectedImage && (
-        <div className="fixed inset-0 z-[60] bg-black/75 flex items-center justify-center px-4">
-          <div className="max-w-4xl w-full bg-background rounded-2xl overflow-hidden shadow-2xl relative">
+        <div
+          className="fixed inset-0 z-[60] bg-black/75 flex items-center justify-center px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt}
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="max-w-4xl w-full bg-background rounded-2xl overflow-hidden shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
               onClick={() => setSelectedImage(null)}

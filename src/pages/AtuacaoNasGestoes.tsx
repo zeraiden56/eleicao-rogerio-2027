@@ -1,162 +1,101 @@
 import SectionTitle from "@/components/SectionTitle";
 import SectionContainer from "@/components/SectionContainer";
 import { Card } from "@/components/ui/card";
-import { Shield, Users, TrendingUp, Award, Target, Briefcase, Calendar } from "lucide-react";
+import { Shield, Users, TrendingUp, Briefcase, Calendar } from "lucide-react";
 import { useScrollToTopOnMount } from "@/hooks/useScrollToTopOnMount";
+
+const gestoes = [
+  {
+    icon: Briefcase,
+    gestao: "2023 – 2026",
+    cargo: "Primeiro Subdefensor Público-Geral",
+    periodo: "2023 – presente",
+    duracao: "2º mandato",
+    descricao:
+      "Segundo em comando da Defensoria Pública de MT, responsável por substituir o Defensor Público-Geral, ordenar despesas e coordenar a administração superior da instituição.",
+    destaques: [
+      "Ordenador de despesas — controle orçamentário e financeiro",
+      "Participação nas contratações para cobertura de todos os 79 núcleos no prazo constitucional",
+      "Comissões de governança e eleitorais; integração ao CONDEGE (Proteção de Dados)",
+      "Conquista do Selo Diamante de Transparência pelo 3º ano consecutivo (2025)",
+    ],
+  },
+  {
+    icon: Shield,
+    gestao: "2019 – 2022",
+    cargo: "Primeiro Subdefensor Público-Geral",
+    periodo: "2019 – 2022",
+    duracao: "1º mandato",
+    descricao:
+      "Primeiro mandato como Subdefensor Público-Geral, com atuação estratégica na expansão dos serviços da Defensoria ao interior do estado e modernização administrativa.",
+    destaques: [
+      "Coordenação temporária do Núcleo da Capital",
+      "Auxiliar da Corregedoria-Geral — apoio ao controle interno e disciplinar",
+      "Suplente no Conselho de Previdência do Estado",
+      "Apoio à interiorização da Defensoria em comarcas sem atendimento presencial",
+    ],
+  },
+  {
+    icon: Users,
+    gestao: "2004 – 2018",
+    cargo: "Defensor Público — Área Fim e Núcleo Cível",
+    periodo: "2004 – 2018",
+    duracao: "14 anos",
+    descricao:
+      "Aprovado no 2º concurso da Defensoria Pública de MT, atuou na área fim — Núcleo Cível de Cuiabá e comarcas do interior — antes de assumir funções de direção.",
+    destaques: [
+      "Interiorização em Sinop e demais comarcas durante o estágio probatório",
+      "Atuação no Núcleo Cível de Cuiabá em direito de família, consumidor e saúde",
+      "Título de Cidadão Mato-grossense concedido pela ALMT (2013)",
+      "Participação em bancas examinadoras de concursos da instituição",
+    ],
+  },
+];
 
 const AtuacaoNasGestoes = () => {
   useScrollToTopOnMount();
+
   return (
     <main className="min-h-screen pt-24">
-      {/* Área Fim - BRANCO */}
-      <SectionContainer background="default" padding="md" maxWidth="xl">
-        <SectionTitle centered subtitle="Atuação direta no atendimento e defesa dos cidadãos">
-          Experiência na Área Fim
-        </SectionTitle>
-
-        <Card className="max-w-4xl mx-auto p-8 md:p-12 mt-12">
-          <div className="space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Shield className="w-8 h-8 text-primary" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold mb-3">Defensor Público Atuante</h3>
-                <div className="space-y-3 text-muted-foreground leading-relaxed">
-                  {/* TODO: preencher com texto real sobre atuação na área fim */}
-                  <p>
-                    Durante toda a carreira, o Dr. Rogério manteve atuação constante na área fim,
-                    atendendo diretamente cidadãos em diversas situações de vulnerabilidade e
-                    defendendo direitos fundamentais perante o Poder Judiciário.
-                  </p>
-                  <p>
-                    Sua experiência abrange diversas áreas do Direito, com destaque para [áreas
-                    de atuação específicas], sempre com foco na defesa técnica qualificada e no
-                    atendimento humanizado.
-                  </p>
-                  <p>
-                    Participou ativamente de mutirões de atendimento, audiências públicas e
-                    projetos de extensão, levando a assistência jurídica gratuita a comunidades
-                    de difícil acesso e contribuindo para a ampliação do alcance da Defensoria.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-5xl mx-auto">
-          {/* TODO: ajustar com dados reais */}
-          {[
-            {
-              icon: Target,
-              number: "1000+",
-              label: "Atendimentos Realizados",
-            },
-            {
-              icon: Users,
-              number: "500+",
-              label: "Ações Judiciais",
-            },
-            {
-              icon: Award,
-              number: "15+",
-              label: "Anos de Atuação",
-            },
-          ].map((item, index) => (
-            <Card key={index} className="p-6 text-center card-hover fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <item.icon className="w-7 h-7 text-primary" />
-              </div>
-              <p className="text-3xl font-bold text-primary mb-2">{item.number}</p>
-              <p className="text-sm text-muted-foreground">{item.label}</p>
-            </Card>
-          ))}
-        </div>
-      </SectionContainer>
-
-      {/* Gestão - VERDE */}
+      {/* Experiência em Gestão - VERDE */}
       <SectionContainer background="primary" padding="md" maxWidth="xl">
         <SectionTitle
           centered
           titleClassName="text-primary-foreground"
           subtitleClassName="text-primary-foreground/80"
-          subtitle="Gestões em que participou, com funções e períodos"
+          subtitle="Funções de liderança exercidas ao longo da carreira na Defensoria Pública"
         >
-          Experiência em Gestão
+          Atuação nas Gestões
         </SectionTitle>
 
-        <div className="max-w-6xl mx-auto mt-12 space-y-6">
-          {[
-            {
-              icon: Briefcase,
-              gestao: "Gestão 2025–2026",
-              cargo: "Primeiro Subdefensor Público-Geral",
-              periodo: "2025 – 2026",
-              duracao: "2 anos",
-              descricao:
-                "Atuação como segundo em comando da instituição, participando das decisões estratégicas e substituindo o Defensor Público-Geral quando necessário.",
-              destaques: [
-                "Ordenação de despesas e acompanhamento orçamentário",
-                "Coordenação de projetos de modernização administrativa",
-                "Interlocução com órgãos de controle e parceiros institucionais",
-              ],
-            },
-            {
-              icon: Shield,
-              gestao: "Gestão 2018–2020",
-              cargo: "Corregedor-Geral",
-              periodo: "2018 – 2020",
-              duracao: "2 anos",
-              descricao:
-                "Responsável pelo controle interno, apuração de irregularidades e aprimoramento dos procedimentos institucionais.",
-              destaques: [
-                "Revisão de fluxos e protocolos correcionais",
-                "Fomento a práticas preventivas e educativas",
-                "Fortalecimento de padrões de transparência",
-              ],
-            },
-            {
-              icon: Users,
-              gestao: "Gestão 2012–2018",
-              cargo: "Coordenador de Núcleo Especializado",
-              periodo: "2012 – 2018",
-              duracao: "6 anos",
-              descricao:
-                "Gestão de equipe especializada com foco em resultados e qualidade do atendimento ao cidadão.",
-              destaques: [
-                "Expansão da capacidade de atendimento",
-                "Padronização de rotinas e capacitação de equipe",
-                "Integração com projetos estratégicos do órgão",
-              ],
-            },
-          ].map((cargo, index) => {
+        <div className="max-w-4xl mx-auto mt-12 space-y-6">
+          {gestoes.map((cargo, index) => {
             const Icon = cargo.icon;
             return (
               <Card
                 key={index}
-                className="p-6 md:p-8 bg-background border-border/60 shadow-md fade-in-up overflow-hidden relative"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="p-6 md:p-8 bg-background border-border/60 rounded-2xl overflow-hidden relative scroll-reveal"
+                style={{ transitionDelay: `${index * 80}ms` }}
               >
                 <span
-                  className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-lg"
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-2xl"
                   aria-hidden="true"
                 />
 
                 <div className="flex flex-col md:flex-row md:items-start gap-6 pl-4">
+                  {/* Ícone */}
                   <div className="flex-shrink-0">
-                    <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Icon className="w-7 h-7 text-primary" />
+                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-primary" />
                     </div>
                   </div>
 
                   <div className="flex-1 space-y-4">
+                    {/* Cabeçalho */}
                     <div>
                       <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
-                          <Calendar className="w-4 h-4" />
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-primary">
+                          <Calendar className="w-3.5 h-3.5" />
                           {cargo.gestao}
                         </span>
                         <span className="text-xs text-muted-foreground">
@@ -168,15 +107,20 @@ const AtuacaoNasGestoes = () => {
                       </h3>
                     </div>
 
-                    <p className="text-muted-foreground">{cargo.descricao}</p>
+                    <hr className="border-border/60" />
 
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {cargo.descricao}
+                    </p>
+
+                    {/* Destaques */}
                     <div>
-                      <p className="font-semibold text-sm uppercase tracking-wide text-foreground">
+                      <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
                         Principais entregas
                       </p>
-                      <ul className="mt-2 space-y-2">
+                      <ul className="space-y-2">
                         {cargo.destaques.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <li key={idx} className="flex items-start gap-3 text-sm text-muted-foreground">
                             <TrendingUp className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                             <span>{item}</span>
                           </li>
@@ -191,21 +135,54 @@ const AtuacaoNasGestoes = () => {
         </div>
       </SectionContainer>
 
-      {/* Conclusão - BRANCO */}
+      {/* Área Fim - BRANCO */}
       <SectionContainer background="default" padding="md" maxWidth="xl">
-        <Card className="max-w-4xl mx-auto p-8 md:p-12 bg-gradient-to-br from-primary/5 to-primary/10">
-          <div className="text-center">
-            <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Experiência Completa para Liderar
-            </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              A combinação entre ampla experiência na área fim e sólida trajetória em cargos
-              de gestão proporciona ao Dr. Rogério Borges Freitas visão completa dos desafios
-              e oportunidades da Defensoria Pública, capacitando-o para exercer a liderança
-              máxima da instituição com competência, equilíbrio e comprometimento.
-            </p>
-          </div>
-        </Card>
+        <SectionTitle centered subtitle="Atuação direta no atendimento e defesa dos cidadãos">
+          Experiência na Área Fim
+        </SectionTitle>
+
+        <div className="max-w-4xl mx-auto mt-10 space-y-5">
+          {[
+            {
+              icon: Briefcase,
+              title: "Defensor Público Atuante",
+              text: "Durante toda a carreira, o Dr. Rogério manteve atuação constante na área fim, atendendo diretamente cidadãos em diversas situações de vulnerabilidade e defendendo direitos fundamentais perante o Poder Judiciário.",
+            },
+            {
+              icon: Users,
+              title: "Atendimento Humanizado",
+              text: "Participou ativamente de mutirões de atendimento, audiências públicas e projetos de extensão, levando a assistência jurídica gratuita a comunidades de difícil acesso e contribuindo para a ampliação do alcance da Defensoria.",
+            },
+            {
+              icon: Shield,
+              title: "Interiorização",
+              text: "Atuou nas comarcas do interior do Estado, incluindo Sinop, durante o estágio probatório, desenvolvendo profunda compreensão da realidade da população mato-grossense e das demandas jurídicas regionais.",
+            },
+          ].map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Card
+                key={index}
+                className="p-6 border border-border/60 rounded-2xl overflow-hidden relative scroll-reveal"
+                style={{ transitionDelay: `${index * 80}ms` }}
+              >
+                <span
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-2xl"
+                  aria-hidden="true"
+                />
+                <div className="flex items-start gap-4 pl-4">
+                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold mb-1">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.text}</p>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
       </SectionContainer>
     </main>
   );

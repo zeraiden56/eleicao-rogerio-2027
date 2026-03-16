@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
+import SearchHighlighter from "./components/SearchHighlighter";
 import Footer from "./components/Footer";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import PageTransition from "./components/PageTransition";
@@ -34,6 +35,7 @@ const AppContent = () => {
   return (
     <>
       <ScrollToTop />
+      <SearchHighlighter />
       <div className="flex flex-col min-h-screen">
         <Navbar />
 

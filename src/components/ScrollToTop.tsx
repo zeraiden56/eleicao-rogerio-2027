@@ -14,7 +14,10 @@ const scrollToTop = () => {
 };
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash, state } = useLocation();
+  // Se veio de uma busca, o SearchHighlighter cuida do scroll — não interferir
+  const hasSearchQuery = !!(state as Record<string, unknown>)?.searchQuery;
+  const skip = hash || hasSearchQuery;
 
   useEffect(() => {
     if ("scrollRestoration" in history) {
@@ -22,18 +25,18 @@ const ScrollToTop = () => {
     }
   }, []);
 
-  // Imediato, antes da pintura: nova página já abre no topo
   useLayoutEffect(() => {
+    if (skip) return;
     scrollToTop();
     const raf1 = requestAnimationFrame(() => {
       scrollToTop();
       requestAnimationFrame(scrollToTop);
     });
     return () => cancelAnimationFrame(raf1);
-  }, [pathname]);
+  }, [pathname, skip]);
 
-  // Repete após paint/transição para vencer qualquer restauração de scroll ou layout tardio
   useEffect(() => {
+    if (skip) return;
     const t1 = setTimeout(scrollToTop, 50);
     const t2 = setTimeout(scrollToTop, 150);
     const t3 = setTimeout(scrollToTop, 350);
@@ -46,7 +49,7 @@ const ScrollToTop = () => {
       clearTimeout(t4);
       clearTimeout(t5);
     };
-  }, [pathname]);
+  }, [pathname, skip]);
 
   return null;
 };

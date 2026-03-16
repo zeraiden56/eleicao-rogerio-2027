@@ -72,7 +72,8 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
   };
 
   const handleSelect = (path: string) => {
-    navigate(path);
+    const q = search.trim();
+    navigate(path, q ? { state: { searchQuery: q } } : undefined);
     onOpenChange(false);
     setSearch("");
   };

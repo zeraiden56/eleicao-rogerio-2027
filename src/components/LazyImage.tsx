@@ -44,7 +44,7 @@ const LazyImage = ({
         });
       },
       {
-        rootMargin: "50px", // Começa a carregar 50px antes de entrar na viewport
+        rootMargin: "300px", // Pré-carrega 300px antes de entrar na viewport
       }
     );
 

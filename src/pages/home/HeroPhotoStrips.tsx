@@ -1,5 +1,7 @@
 // src/pages/home/HeroPhotoStrips.tsx
+import { useEffect } from "react";
 import { heroPhotos } from "@/data/heroPhotos";
+import LazyImage from "@/components/LazyImage";
 
 const rotateArray = <T,>(arr: T[], offset: number): T[] => {
   if (arr.length === 0) return [];
@@ -8,8 +10,6 @@ const rotateArray = <T,>(arr: T[], offset: number): T[] => {
 };
 
 const MIN_IMAGES_PER_ROW = 10;
-
-import LazyImage from "@/components/LazyImage";
 
 const HeroPhoto: React.FC<{ src: string }> = ({ src }) => {
   return (
@@ -33,9 +33,19 @@ const HeroPhoto: React.FC<{ src: string }> = ({ src }) => {
   );
 };
 
-const HeroPhotoStrips: React.FC = () => {
-  // usa só algumas fotos pra não pesar demais
-  const usablePhotos = heroPhotos.slice(0, 24);
+interface HeroPhotoStripsProps {
+  /** Callback chamado após a montagem (não espera imagens carregarem) */
+  onReady?: () => void;
+}
+
+const HeroPhotoStrips: React.FC<HeroPhotoStripsProps> = ({ onReady }) => {
+  // todas as SELECIONADAS estão 1200x800 e comprimidas — usar todas para máxima variedade
+  const usablePhotos = heroPhotos;
+
+  // Notifica o pai imediatamente após montagem, sem bloquear renderização
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
 
   if (usablePhotos.length === 0) return null;
 
@@ -55,8 +65,8 @@ const HeroPhotoStrips: React.FC = () => {
   });
 
   return (
-    // top ≈ altura navbar + folga, bottom = respiro no fim do hero
-    <div className="absolute left-0 right-0 top-[4.75rem] bottom-4 overflow-hidden pointer-events-none">
+    // top coincide com a altura real da navbar: h-20 mobile, h-24 desktop
+    <div className="absolute left-0 right-0 top-20 md:top-24 bottom-4 overflow-hidden pointer-events-none">
       <div className="flex h-full flex-col gap-3 py-3">
         {rows.map((row, rowIndex) => {
           let baseImages = rowImages[rowIndex];

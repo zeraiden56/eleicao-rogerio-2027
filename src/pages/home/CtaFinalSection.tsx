@@ -35,6 +35,15 @@ const CtaFinalSection = () => {
               Ver Propostas e Plano de Gestão
             </Button>
           </Link>
+          <Link to="/chapa">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto text-lg bg-white/15 border-white/50 text-primary-foreground hover:bg-white/25 hover:border-white/70 hover:text-primary-foreground"
+            >
+              Conhecer a Chapa
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

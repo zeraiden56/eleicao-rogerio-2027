@@ -201,25 +201,25 @@ All colors MUST be HSL.
     overflow: hidden;
   }
   
-  /* Animações de revelação das laterais (estilo Framer: suave ao rolar) */
+  /* Animações de revelação ao rolar — respeitam prefers-reduced-motion */
   .reveal-left,
   .reveal-right,
   .reveal-up {
     opacity: 0;
-    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .reveal-left {
-    transform: translateX(-40px);
+    transform: translateX(-32px);
   }
   
   .reveal-right {
-    transform: translateX(40px);
+    transform: translateX(32px);
   }
   
   .reveal-up {
-    transform: translateY(28px);
+    transform: translateY(24px);
   }
   
   .reveal-left.revealed,
@@ -229,16 +229,31 @@ All colors MUST be HSL.
     transform: translateX(0) translateY(0);
   }
   
-  /* Scroll reveal genérico para qualquer seção (use classe scroll-reveal) */
+  /* Scroll reveal genérico (use classe scroll-reveal) */
   .scroll-reveal {
     opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(24px);
+    transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .scroll-reveal.revealed {
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* Sem animação quando o usuário preferir movimento reduzido */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-left,
+    .reveal-right,
+    .reveal-up,
+    .scroll-reveal,
+    .fade-in-up {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
+    }
+  }
 }
+

@@ -1,21 +1,20 @@
 // src/pages/home/HeroSection.tsx
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Target, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import HeroPhotoStrips from "./HeroPhotoStrips";
-import HeroLoader from "@/components/HeroLoader";
-import { heroPhotos } from "@/data/heroPhotos";
 import LazyImage from "@/components/LazyImage";
 
+/**
+ * HeroSection sem HeroLoader bloqueante.
+ * A foto principal é carregada com prioridade (fetchpriority="high").
+ * O mural de fotos é montado em paralelo e fica visível só após o hero renderizar.
+ * Isso evita que o usuário veja uma tela em branco enquanto 24+ fotos carregam.
+ */
 const HeroSection = () => {
-  const [imagesLoaded, setImagesLoaded] = useState(false);
-  
-  // Imagens do hero: foto principal + fotos do mural
-  const heroImages = [
-    "/rogerio.jpeg",
-    ...heroPhotos.slice(0, 24), // Primeiras 24 para não pesar demais
-  ];
+  const [muralVisible, setMuralVisible] = useState(false);
+
   const handleScrollToGrowth = () => {
     const el = document.getElementById("crescimento-section");
     if (el) {
@@ -24,47 +23,40 @@ const HeroSection = () => {
   };
 
   return (
-    <>
-      {!imagesLoaded && (
-        <HeroLoader images={heroImages} onLoadComplete={() => setImagesLoaded(true)} />
-      )}
-      
-      <section 
-        className={`relative min-h-[90vh] flex items-center justify-center overflow-hidden transition-opacity duration-500 ${
-          imagesLoaded ? "opacity-100" : "opacity-0"
-        }`}
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* base em verde com gradiente */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background: "var(--gradient-primary-textured)",
+        }}
+      />
+
+      {/* Textura granulada */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: "var(--texture-grain-primary)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Mural de fotos — renderizado imediatamente, visibilidade controlada por CSS */}
+      <div
+        className="absolute inset-0 z-0 transition-opacity duration-700"
+        style={{ opacity: muralVisible ? 0.8 : 0 }}
+        aria-hidden="true"
       >
-        {/* base em verde com gradiente melhorado */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{ 
-            background: "var(--gradient-primary-textured)",
-          }}
-        />
+        <HeroPhotoStrips onReady={() => setMuralVisible(true)} />
+      </div>
 
-        {/* Textura granulada para fundo verde */}
-        <div 
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: "var(--texture-grain-primary)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        {/* mural de fotos */}
-        {imagesLoaded && (
-          <div className="absolute inset-0 z-0 opacity-80">
-            <HeroPhotoStrips />
-          </div>
-        )}
-
-        {/* overlay para contraste com gradiente melhorado */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/0 via-black/30 to-black/60" />
+      {/* overlay para contraste */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/0 via-black/30 to-black/60" />
 
       {/* conteúdo principal */}
       <div className="container mx-auto px-4 z-10 relative pt-24 pb-16">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Foto do candidato */}
+          {/* Foto do candidato — alta prioridade */}
           <div
             className="
               w-[21rem] h-[21rem]
@@ -79,6 +71,7 @@ const HeroSection = () => {
                 src="/rogerio.jpeg"
                 alt="Dr. Rogério Borges Freitas"
                 className="w-full h-full object-cover object-top"
+                fetchPriority="high"
               />
             </div>
           </div>
@@ -94,7 +87,7 @@ const HeroSection = () => {
               Continuidade, responsabilidade e foco na atividade-fim.
             </p>
             <span className="mt-2 inline-block text-sm md:text-base text-primary-foreground/80 tracking-wide">
-              Candidato ao Biênio 2026 – 2028
+              Candidato ao Biênio 2027 – 2028
             </span>
           </div>
 
@@ -129,28 +122,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicador discreto */}
-      <button
-        type="button"
-        onClick={handleScrollToGrowth}
-        aria-label="Ver resultados da gestão"
-        className="
-          absolute left-1/2 bottom-5 -translate-x-1/2
-          z-20
-          flex items-center justify-center
-          w-11 h-11
-          rounded-full
-          bg-background/70
-          text-foreground
-          shadow-md
-          hover:bg-background
-          transition-colors
-        "
-      >
-        <ChevronDown className="w-5 h-5" />
-      </button>
     </section>
-    </>
   );
 };
 
